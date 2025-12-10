@@ -12,6 +12,12 @@ export const todos = todosFromServer.map(todo => ({
   user: getUserById(todo.userId),
 }));
 
+function getNewTodoId(todo: Todo[]) {
+  const maxId = Math.max(...todo.map(todoItem => todoItem.id));
+
+  return maxId + 1;
+}
+
 export const App = () => {
   const [todoList, setTodo] = useState<Todo[]>(todos);
   const [title, setTitle] = useState('');
@@ -55,7 +61,7 @@ export const App = () => {
 
     addTodo({
       userId: userID,
-      id: todoList.length + 1,
+      id: getNewTodoId(todoList),
       title: title,
       completed: false,
       user: getUserById(userID),
@@ -67,7 +73,7 @@ export const App = () => {
     <div className="App">
       <h1>Add todo form</h1>
 
-      <form action="/api/todos" method="POST" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="field">
           <label className="label" htmlFor="post-title">
             Title:&nbsp;&nbsp;

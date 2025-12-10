@@ -13,7 +13,7 @@ export const todos = todosFromServer.map(todo => ({
 }));
 
 function getNewTodoId(todo: Todo[]) {
-  const maxId = Math.max(...todo.map(todoItem => todoItem.id));
+  const maxId = Math.max(0, ...todo.map(item => item.id));
 
   return maxId + 1;
 }
